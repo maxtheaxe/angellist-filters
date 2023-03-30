@@ -3,6 +3,7 @@
 // @version  1.1
 // @grant    none
 // @include  https://angel.co/jobs
+// @include  https://wellfound.com/jobs
 // @include  https://www.linkedin.com/jobs/search/*
 // ==/UserScript==
 
@@ -51,9 +52,11 @@ function filterListings(disallowedTerms) {
 		var jobListings = document.getElementsByClassName('styles_component__uTjje');
 	} else { // linkedin job search
 		var jobsContainer = document.querySelector(
-			'ul.scaffold-layout__list-container');
-		var jobListings = jobsContainer.getElementsByClassName(
-			'jobs-search-results__list-item');
+			'div[data-test="JobSearchResults"]');
+		// var jobListings = jobsContainer.getElementsByClassName(
+		// 	'styles_component__uTjje');
+		var jobListings = jobsContainer.querySelectorAll(
+			'div[data-test="StartupResult"]');
 	}
 	var numRemoved = 0;
 	for (const listing of jobListings) {
@@ -74,7 +77,7 @@ function filterListings(disallowedTerms) {
  * return boolean of whether current site is angel list (false being linkedin)
  */
 function isAngelList() {
-	if (window.location.href.includes("angel.co/jobs")) { // angellist job search
+	if (window.location.href.includes("wellfound.com/jobs")) { // angellist job search
 		return true;
 	} else { // linkedin job search
 		return false;
